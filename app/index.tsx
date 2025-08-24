@@ -1,30 +1,62 @@
 import { useState } from "react";
-import { Button, Text, TextInput, View,StyleSheet, KeyboardAvoidingView } from "react-native";
+import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function Index() {
-  const [temp, setTemp] = useState<string>("user");
-  const [name, setName] = useState<string>("");
+  const [anwser, setAnwser] = useState<number>(0);
+  const [number1, setNumber1] = useState<number>(0);
+  const [number2, setNumber2] = useState<number>(0);
 
-  const changeName = (input: string) => {
-    
-    setName(input);
+  const changeNumber1 = (input: string) => {
+    setNumber1(parseFloat(input));
   };
+
+  const changeNumber2 = (input: string) => {
+    setNumber2(parseFloat(input));
+  };
+
+  const plus = () => {
+    const sum = number1 + number2;
+    setAnwser(sum);
+  }
+  const minus = () => {
+    const difference = number1 - number2;
+    setAnwser(difference);
+  };
+
 
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: "yellow",
+      backgroundColor: "white",
       padding: 20,
       gap: 10,
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
     },
-    firstname: {
+    input: {
       borderWidth: 1,
       borderColor: "black",
       padding: 10,
       width: "100%",
       backgroundColor: "white",
+    },
+    button: {
+      backgroundColor: "lightgray",
+      padding: 10,
+      margin: 5,
+      borderRadius: 5,
+      alignItems: "center",
+      minWidth: 50,
+    },
+    buttonContainer: {
+      flexDirection: "row",
+      gap: 20, 
+      justifyContent: "center",         
+      
+    },
+    buttonText: {
+      fontSize: 18,
+      fontWeight: "bold",
     }
   });
 
@@ -32,9 +64,17 @@ export default function Index() {
     <KeyboardAvoidingView
       style={styles.container}
     >
-      <Text>Hello user.</Text>
-      <TextInput style={styles.firstname} />
-      <Button title="ok" onPress={() => changeName(name)}/> 
+      <Text>Result: {anwser}</Text>
+      <TextInput keyboardType="numeric" style={styles.input} value={number1.toString()} onChangeText={changeNumber1} />
+      <TextInput keyboardType="numeric" style={styles.input} value={number2.toString()} onChangeText={changeNumber2} />
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={plus} style={styles.button}>
+          <Text style={styles.buttonText}>+</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={minus} style={styles.button}>
+          <Text style={styles.buttonText}>-</Text>
+        </TouchableOpacity>
+      </View>
     </KeyboardAvoidingView>
   );
 }
